@@ -1,14 +1,14 @@
-#include "esp_event.h" //for wifi event
+#include "esp_event.h"
 #include "esp_http_client.h"
-#include "esp_log.h"           //for showing logs
-#include "esp_system.h"        //esp_init funtions esp_err_t
-#include "esp_wifi.h"          //esp_wifi_init functions and wifi operations
-#include "freertos/FreeRTOS.h" //for delay,mutexs,semphrs rtos operations
-#include "lwip/err.h"          //light weight ip packets error handling
-#include "lwip/sys.h"          //system applications for light weight ip apps
-#include "nvs_flash.h"         //non volatile storage
-#include <stdio.h>             //for basic printf commands
-#include <string.h>            //for handling strings
+#include "esp_log.h"
+#include "esp_system.h"
+#include "esp_wifi.h"
+#include "freertos/FreeRTOS.h"
+#include "lwip/err.h"
+#include "lwip/sys.h"
+#include "nvs_flash.h"
+#include <stdio.h>
+#include <string.h>
 
 const char *ssid = "dethz";
 const char *pass = "orewadetzz";
