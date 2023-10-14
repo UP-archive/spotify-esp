@@ -71,7 +71,8 @@ void controller(char state) {
         .url = "http://tunnel.katzu.wtf/api/controller/play",
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
-    // first request
+
+    // Send Request
     err = esp_http_client_perform(client);
 
     esp_http_client_cleanup(client);
@@ -81,7 +82,8 @@ void controller(char state) {
         .url = "http://tunnel.katzu.wtf/api/controller/next",
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
-    // first request
+
+    // Send Request
     err = esp_http_client_perform(client);
 
     esp_http_client_cleanup(client);
@@ -91,7 +93,8 @@ void controller(char state) {
         .url = "http://tunnel.katzu.wtf/api/controller/prev",
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
-    // first request
+
+    // Send Request
     err = esp_http_client_perform(client);
 
     esp_http_client_cleanup(client);
