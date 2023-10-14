@@ -68,7 +68,7 @@ void controller(char state) {
   if (state == 'p') {
     esp_err_t err;
     esp_http_client_config_t config = {
-        .url = "http://httpbin.org/get",
+        .url = "http://tunnel.katzu.wtf/api/controller/play",
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
     // first request
@@ -78,7 +78,7 @@ void controller(char state) {
   } else if (state = 'n') {
     esp_err_t err;
     esp_http_client_config_t config = {
-        .url = "http://httpbin.org/get",
+        .url = "http://tunnel.katzu.wtf/api/controller/next",
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
     // first request
@@ -88,7 +88,7 @@ void controller(char state) {
   } else if (state = 'o') {
     esp_err_t err;
     esp_http_client_config_t config = {
-        .url = "http://httpbin.org/get",
+        .url = "http://tunnel.katzu.wtf/api/controller/prev",
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
     // first request
