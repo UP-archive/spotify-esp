@@ -74,12 +74,6 @@ void controller(char state) {
     // first request
     err = esp_http_client_perform(client);
 
-    // second request
-    esp_http_client_set_url(client, "http://httpbin.org/anything");
-    esp_http_client_set_method(client, HTTP_METHOD_DELETE);
-    esp_http_client_set_header(client, "HeaderKey", "HeaderValue");
-    err = esp_http_client_perform(client);
-
     esp_http_client_cleanup(client);
   } else if (state = 'n') {
     esp_err_t err;
@@ -90,12 +84,6 @@ void controller(char state) {
     // first request
     err = esp_http_client_perform(client);
 
-    // second request
-    esp_http_client_set_url(client, "http://httpbin.org/anything");
-    esp_http_client_set_method(client, HTTP_METHOD_DELETE);
-    esp_http_client_set_header(client, "HeaderKey", "HeaderValue");
-    err = esp_http_client_perform(client);
-
     esp_http_client_cleanup(client);
   } else if (state = 'o') {
     esp_err_t err;
@@ -104,12 +92,6 @@ void controller(char state) {
     };
     esp_http_client_handle_t client = esp_http_client_init(&config);
     // first request
-    err = esp_http_client_perform(client);
-
-    // second request
-    esp_http_client_set_url(client, "http://httpbin.org/anything");
-    esp_http_client_set_method(client, HTTP_METHOD_DELETE);
-    esp_http_client_set_header(client, "HeaderKey", "HeaderValue");
     err = esp_http_client_perform(client);
 
     esp_http_client_cleanup(client);
