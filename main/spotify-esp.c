@@ -1,4 +1,5 @@
-#include "esp_event.h"         //for wifi event
+#include "esp_event.h" //for wifi event
+#include "esp_http_client.h"
 #include "esp_log.h"           //for showing logs
 #include "esp_system.h"        //esp_init funtions esp_err_t
 #include "esp_wifi.h"          //esp_wifi_init functions and wifi operations
@@ -9,8 +10,8 @@
 #include <stdio.h>             //for basic printf commands
 #include <string.h>            //for handling strings
 
-const char *ssid = "";
-const char *pass = "";
+const char *ssid = "dethz";
+const char *pass = "orewadetzz";
 int retry_num = 0;
 static void wifi_event_handler(void *event_handler_arg,
                                esp_event_base_t event_base, int32_t event_id,
@@ -45,8 +46,8 @@ void wifi_connection() {
                              NULL);
   wifi_config_t wifi_configuration = {.sta =
                                           {
-                                              .ssid = "dethz",
-                                              .password = "orewadetzz",
+                                              .ssid = "",
+                                              .password = "",
 
                                           }
 
@@ -63,7 +64,25 @@ void wifi_connection() {
   printf("wifi_init_softap finished. SSID:%s  password:%s", ssid, pass);
 }
 
-void controller(char state) {}
+void controller(char state) {
+  if (state == 'p') {
+    esp_err_t err;
+    esp_http_client_config_t config = {
+        .url = "http://httpbin.org/get",
+    };
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+    // first request
+    err = esp_http_client_perform(client);
+
+    // second request
+    esp_http_client_set_url(client, "http://httpbin.org/anything");
+    esp_http_client_set_method(client, HTTP_METHOD_DELETE);
+    esp_http_client_set_header(client, "HeaderKey", "HeaderValue");
+    err = esp_http_client_perform(client);
+
+    esp_http_client_cleanup(client);
+  }
+}
 
 void app_main(void) {
   nvs_flash_init();
