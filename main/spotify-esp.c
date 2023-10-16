@@ -136,15 +136,35 @@ void app_main(void)
   printf("WIFI was initiated ...........\n\n");
 
   // Set Button Input
+  gpio_reset_pin(PLAY);
+  gpio_reset_pin(PREV);
+  gpio_reset_pin(NEXT);
+
   gpio_set_direction(PLAY, GPIO_MODE_INPUT);
   gpio_set_direction(PREV, GPIO_MODE_INPUT);
   gpio_set_direction(NEXT, GPIO_MODE_INPUT);
 
-  for (;;) {
-    if (gpio_get_level(PREV) == 0) {
+  // Button Check
+  while (1) {
+    if (gpio_get_level(PREV) == 0 && gpio_get_level(NEXT) == 1 && gpio_get_level(PLAY) == 1) {
+      printf("%d\n", gpio_get_level(PREV));
       rest_post_prev();
+      printf("\n");
+    } else if (gpio_get_level(PREV) == 1 && gpio_get_level(NEXT) == 0 && gpio_get_level(PLAY) == 1) {
+      printf("%d\n", gpio_get_level(NEXT));
+      rest_post_next();
+      printf("\n");
+    } else if (gpio_get_level(PREV) == 1 && gpio_get_level(NEXT) == 1 && gpio_get_level(PLAY) == 0) {
+      printf("%d\n", gpio_get_level(PLAY));
+      rest_post_play();
+      printf("\n");
     } else {
-      printf('.');
+      printf("PREV: %d\n", gpio_get_level(PREV));
+      printf("NEXT: %d\n", gpio_get_level(NEXT));
+      printf("PLAY: %d\n", gpio_get_level(PLAY));
+      printf("\n");
     }
+
+    vTaskDelay(1);
   }
 }
