@@ -1,5 +1,4 @@
 menu "Pin Config"
-
 config GPIO_0
   int "GPIO pin #0"
   default 15
@@ -17,4 +16,18 @@ config GPIO_2
   default 17
   help
     Set the GPIO pin for Pin #2
+endmenu
+
+menu "Connection Configuration"
+	config ESP_WIFI_SSID
+			string "WiFi SSID"
+			default ""
+			help
+					SSID (network name)
+
+	config ESP_WIFI_PASSWORD
+			string "WiFi Password"
+			default ""
+			help
+					WiFi password (WPA or WPA2)
 endmenu
