@@ -16,6 +16,20 @@ config GPIO_2
   default 17
   help
     Set the GPIO pin for Pin #2
+
+config S_CLK
+  int "Screen GPIO CLK Pin"
+  default 21
+  help
+    Set Screen Clock Pin
+
+config S_DAT
+  int "Screen GPIO DATA Pin"
+  default 22
+  help
+    Set Screen Data Pin
+
+config S_DAT
 endmenu
 
 menu "Connection Configuration"
