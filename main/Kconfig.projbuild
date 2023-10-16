@@ -25,7 +25,7 @@ config CLOCK_LINE
     Set Clock Pin
     
 config DATA_LINE
-  char "SDA pin"
+  int "SDA pin"
   default 35
   help
     Set Data Line
