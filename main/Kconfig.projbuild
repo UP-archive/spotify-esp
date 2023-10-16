@@ -1,0 +1,21 @@
+menu "Config"
+
+config GPIO_0
+  int "GPIO pin #0"
+  default 16
+  help
+    Set the GPIO pin for Pin #0
+
+config GPIO_1
+  int "GPIO pin #1"
+  default 17
+  help
+    Set the GPIO pin for Pin #1
+
+config GPIO_2
+  int "GPIO pin #2"
+  default 18
+  help
+    Set the GPIO pin for Pin #2
+
+endmenu
