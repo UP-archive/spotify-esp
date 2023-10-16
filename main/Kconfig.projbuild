@@ -19,13 +19,13 @@ config GPIO_2
 
 config S_CLK
   int "Screen GPIO CLK Pin"
-  default 21
+  default 22
   help
     Set Screen Clock Pin
 
 config S_DAT
   int "Screen GPIO DATA Pin"
-  default 22
+  default 21
   help
     Set Screen Data Pin
 
