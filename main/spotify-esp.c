@@ -4,15 +4,25 @@
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 #include "lwip/err.h"
 #include "lwip/sys.h"
 #include "nvs_flash.h"
+#include "driver/gpio.h"
 #include <stdio.h>
 #include <string.h>
+
+#define PLAY GPIO_NUM_26
+#define PREV GPIO_NUM_25
+#define NEXT GPIO_NUM_27
+
+#define SC_DATA GPIO_NUM_35
+#define SC_CLK GPIO_NUM_32
 
 const char *ssid = "dethz";
 const char *pass = "orewadetzz";
 int retry_num = 0;
+
 static void wifi_event_handler(void *event_handler_arg,
                                esp_event_base_t event_base, int32_t event_id,
                                void *event_data) {
@@ -64,44 +74,98 @@ void wifi_connection() {
   printf("wifi_init_softap finished. SSID:%s  password:%s", ssid, pass);
 }
 
-void controller(char state) {
-  if (state == 'p') {
-    esp_err_t err;
-    esp_http_client_config_t config = {
-        .url = "http://tunnel.katzu.wtf/api/controller/play",
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&config);
-
-    // Send Request
-    err = esp_http_client_perform(client);
-
-    esp_http_client_cleanup(client);
-  } else if (state = 'n') {
-    esp_err_t err;
-    esp_http_client_config_t config = {
-        .url = "http://tunnel.katzu.wtf/api/controller/next",
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&config);
-
-    // Send Request
-    err = esp_http_client_perform(client);
-
-    esp_http_client_cleanup(client);
-  } else if (state = 'o') {
-    esp_err_t err;
-    esp_http_client_config_t config = {
-        .url = "http://tunnel.katzu.wtf/api/controller/prev",
-    };
-    esp_http_client_handle_t client = esp_http_client_init(&config);
-
-    // Send Request
-    err = esp_http_client_perform(client);
-
-    esp_http_client_cleanup(client);
-  }
-}
+// void controller(int state) {
+//   if (state == 0) {
+//     esp_err_t err;
+//     esp_http_client_config_t config = {
+//         .url = "http://tunnel.katzu.wtf/api/controller/play",
+//     };
+//     esp_http_client_handle_t client = esp_http_client_init(&config);
+//
+//     // Send Request
+//     err = esp_http_client_perform(client);
+//
+//     esp_http_client_cleanup(client);
+//   } else if (state == 1) {
+//     esp_err_t err;
+//     esp_http_client_config_t config = {
+//         .url = "http://tunnel.katzu.wtf/api/controller/next",
+//     };
+//     esp_http_client_handle_t client = esp_http_client_init(&config);
+//
+//     // Send Request
+//     err = esp_http_client_perform(client);
+//
+//     esp_http_client_cleanup(client);
+//   } else if (state == 2) {
+//     esp_err_t err;
+//     esp_http_client_config_t config = {
+//         .url = "http://tunnel.katzu.wtf/api/controller/prev",
+//     };
+//     esp_http_client_handle_t client = esp_http_client_init(&config);
+//
+//     // Send Request
+//     err = esp_http_client_perform(client);
+//
+//     esp_http_client_cleanup(client);
+//   }
+// }
 
 void app_main(void) {
   nvs_flash_init();
   wifi_connection();
+
+  // Set Button Input
+  gpio_set_direction(PLAY, GPIO_MODE_INPUT);
+  gpio_set_direction(PREV, GPIO_MODE_INPUT);
+  gpio_set_direction(NEXT, GPIO_MODE_INPUT);
+
+  // Set button press works 
+  while (1)
+  {
+    if (gpio_get_level(PLAY) == 0) {
+			printf("Play Button Pressed");
+
+      esp_err_t err;
+			esp_http_client_config_t config = {
+					.url = "http://tunnel.katzu.wtf/api/controller/play",
+			};
+			esp_http_client_handle_t client = esp_http_client_init(&config);
+
+			// Send Request
+			err = esp_http_client_perform(client);
+			esp_http_client_cleanup(client);
+    }
+
+    if (gpio_get_level(NEXT) == 0) {
+			printf("Next Button Pressed");
+      
+			esp_err_t err;
+			esp_http_client_config_t config = {
+					.url = "http://tunnel.katzu.wtf/api/controller/next",
+			};
+			esp_http_client_handle_t client = esp_http_client_init(&config);
+
+			// Send Request
+			err = esp_http_client_perform(client);
+			esp_http_client_cleanup(client);
+    }
+    
+    if (gpio_get_level(PREV) == 0) {
+			printf("Previous Button Pressed");
+      
+			esp_err_t err;
+			esp_http_client_config_t config = {
+					.url = "http://tunnel.katzu.wtf/api/controller/prev",
+			};
+			esp_http_client_handle_t client = esp_http_client_init(&config);
+
+			// Send Request
+			err = esp_http_client_perform(client);
+			esp_http_client_cleanup(client);
+    }
+
+    vTaskDelay(1);
+  }
+  
 }
