@@ -1,7 +1,7 @@
 ## IDF Component Manager Manifest File
 dependencies:
-  espressif/esp-cryptoauthlib: "*"
   espressif/ssd1306: "^1.0.5"
+  espressif/esp-cryptoauthlib: "*"
   ## Required IDF version
   idf:
     version: ">=4.1.0"
